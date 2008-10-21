@@ -3,10 +3,9 @@
  * HTML Cache CakePHP Helper
  * Copyright (c) 2008 Matt Curry
  * www.PseudoCoder.com
- * http://www.pseudocoder.com/archives/2008/09/03/cakephp-html-cache-helpercakephp-html-cache-helper/
+ * http://github.com/mcurry/cakephp/tree/master/helpers/html_cache
  *
  * @author      mattc <matt@pseudocoder.com>
- * @version     1.0
  * @license     MIT
  *
  */
