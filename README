@@ -34,6 +34,6 @@ multiple aggregators. This really adds up to a ton of requests.
     
 /* Tips */
   * To expire the cache I use a cron job which deletes old files from the directory.
-  find /full/path/to/app/webroot/controller/ -mmin +360 | xargs rm -f
+  find /full/path/to/app/webroot/cache -mmin +360 | xargs rm -f
   * A sample htaccess file, cache.htaccess is included that will additionally gzip the cached files
   for even better performance.
