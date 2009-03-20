@@ -1,5 +1,6 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} ^GET$
     RewriteCond %{DOCUMENT_ROOT}/cache/$1/index.html -f
     RewriteRule ^(.*)$ /cache/$1/index.html [L]
     RewriteCond %{REQUEST_FILENAME} !-d
