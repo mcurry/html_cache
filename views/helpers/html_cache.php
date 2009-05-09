@@ -1,10 +1,9 @@
 <?php
 /*
- * HTML Cache CakePHP Helper
+ * HTML Cache CakePHP Plugin
  * Copyright (c) 2008 Matt Curry
  * www.PseudoCoder.com
- * http://github.com/mcurry/cakephp/tree/master/helpers/html_cache
- * http://www.pseudocoder.com/archives/2008/09/03/cakephp-html-cache-helper/
+ * http://github.com/mcurry/html_cache
  *
  * @author      mattc <matt@pseudocoder.com>
  * @license     MIT
@@ -12,8 +11,15 @@
  */
 
 class HtmlCacheHelper extends Helper {
+  var $options = array('test_mode' => false, 'www_root' => WWW_ROOT);
+  var $path = null;
+  
+  function __construct($options) {
+    $this->options = am ($this->options, $options);
+  }
+  
   function afterLayout() {
-    if (Configure::read('debug') > 0) {
+    if (!$this->options['test_mode'] && Configure::read('debug') > 0) {
       return;
     }
 
@@ -30,9 +36,8 @@ class HtmlCacheHelper extends Helper {
     if($path !== '') {
       $path = DS . ltrim($path, DS);
     }
-    $path = WWW_ROOT . 'cache' . $path . DS . 'index.html';
-
-    $file = new File($path, true);
+    $this->path = $this->options['www_root'] . 'cache' . $path . DS . 'index.html';
+    $file = new File($this->path, true);
     $file->write($view->output);
   }
 }
