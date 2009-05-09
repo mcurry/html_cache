@@ -1,9 +1,8 @@
 /*
- * HtmlCache Helper
- * Copyright (c) 2008 Matt Curry
- * www.PseudoCoder.com
- * http://github.com/mcurry/cakephp/tree/master/helpers
- * http://www.pseudocoder.com/archives/2008/09/03/cakephp-html-cache-helper/
+ * HtmlCache Plugin
+ * Copyright (c) 2009 Matt Curry
+ * http://pseudocoder.com
+ * http://github.com/mcurry/html_cache
  *
  * @author      mattc <matt@pseudocoder.com>
  * @license     MIT
@@ -15,7 +14,7 @@ Cake's core cache helper is great, but the files it outputs are PHP files, so it
 straight HTML files. This HTML Cache Helper writes out pure HTML, meaning the web server doesn't have to
 touch PHP when a request is made.
 
-This helper is for sites with high traffic pages that have nothing unique about the user on the page. I
+This plugin is for sites with high traffic pages that have nothing unique about the user on the page. I
 use this helper on http://www.rsstalker.com. It handles the custom RSS feeds (currently around 13k), which
 is perfect since there is nothing user specific in the XML. Each feed gets hit multiple times a day, by
 multiple aggregators. This really adds up to a ton of requests.
@@ -26,7 +25,9 @@ multiple aggregators. This really adds up to a ton of requests.
 
 /* Instructions */
   * Include the helper in your controller:
-    $helpers = array('HtmlCache');
+    $helpers = array('HtmlCache.HtmlCache');
+  * Or in a single action
+    $this->helpers[] = 'HtmlCache.HtmlCache';
   * Update your webroot .htaccess file to include the following lines before CakePHP's Rewrite Cond
     (see webroot.htaccess for an example):
     RewriteCond %{DOCUMENT_ROOT}/cache/$1/index.html -f

@@ -1,8 +1,8 @@
 <?php
 /*
- * HTML Cache CakePHP Plugin
- * Copyright (c) 2008 Matt Curry
- * www.PseudoCoder.com
+ * HtmlCache Plugin
+ * Copyright (c) 2009 Matt Curry
+ * http://pseudocoder.com
  * http://github.com/mcurry/html_cache
  *
  * @author      mattc <matt@pseudocoder.com>
