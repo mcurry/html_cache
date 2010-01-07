@@ -30,6 +30,7 @@ multiple aggregators. This really adds up to a ton of requests.
     $this->helpers[] = 'HtmlCache.HtmlCache';
   * Update your webroot .htaccess file to include the following lines before CakePHP's Rewrite Cond
     (see extras/webroot.htaccess for an example):
+    RewriteCond %{REQUEST_METHOD} ^GET$
     RewriteCond %{DOCUMENT_ROOT}/cache/$1/index.html -f
     RewriteRule ^(.*)$ /cache/$1/index.html [L]
 
