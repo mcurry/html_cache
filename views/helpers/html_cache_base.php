@@ -12,6 +12,14 @@
 
 class HtmlCacheBaseHelper extends Helper {
   var $options = array('test_mode' => false, 'www_root' => WWW_ROOT);
+  var $helpers = array('Session');
+  var $isFlash = false;
+
+  function beforeRender() {
+    if($this->Session->read('Message')) {
+      $this->isFlash = true;
+    }
+  }
   
   function afterLayout() {
     if(!$this->__isCachable()) {
@@ -39,6 +47,14 @@ class HtmlCacheBaseHelper extends Helper {
   
   function __isCachable() {
     if (!$this->options['test_mode'] && Configure::read('debug') > 0) {
+      return false;
+    }
+    
+    if($this->isFlash) {
+      return false;
+    }
+    
+    if(!empty($this->data)) {
       return false;
     }
     
