@@ -11,7 +11,7 @@
  */
 
 class HtmlCacheHookComponent extends Object {
-	var $clearActions = array('add', 'edit', 'admin_add', 'admin_edit');
+	var $clearActions = array('add', 'edit', 'admin_add', 'admin_edit', 'delete', 'admin_delete');
 	
 	function startup(&$controller) {
 		if($controller->data && in_array($controller->action, $this->clearActions)) {
