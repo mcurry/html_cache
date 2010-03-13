@@ -25,7 +25,7 @@ multiple aggregators. This really adds up to a ton of requests.
 
 /* Instructions */
   * Include the helper in your controller:
-    $helpers = array('HtmlCache.HtmlCache');
+    var $helpers = array('HtmlCache.HtmlCache');
   * Or in a single action
     $this->helpers[] = 'HtmlCache.HtmlCache';
   * Update your webroot .htaccess file to include the following lines before CakePHP's Rewrite Cond
