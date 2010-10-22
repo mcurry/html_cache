@@ -13,7 +13,7 @@
 App::import('Helper', 'HtmlCache.HtmlCacheBase');
 class HtmlCacheHelper extends HtmlCacheBaseHelper {
   function __construct($options) {
-    $this->options = am ($this->options, $options);
+    $this->options = array_merge($this->options, $options);
   }
 }
 ?>

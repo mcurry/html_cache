@@ -8,9 +8,10 @@ class HtmlCacheTestCase extends CakeTestCase {
   
   function startCase() {
     $this->www_root = ROOT . DS . 'app' . DS . 'plugins' . DS . 'html_cache' . DS . 'tests' . DS . 'test_app' . DS . 'webroot' . DS;
+    $controller = null;
     $this->View = new View($controller);
     $this->View->loaded['HtmlCache'] = new HtmlCacheHelper(array('test_mode' => true, 'www_root' => $this->www_root));
-    
+    $this->View->loaded['HtmlCache']->here = '/posts';
   }
   
   function endCase() {
@@ -39,8 +40,9 @@ END;
     $this->View->output = $expected;
     $this->View->_triggerHelpers('afterLayout');
     
-    $this->assertTrue(file_exists($this->View->loaded['HtmlCache']->path));
-    $cached = file_get_contents($this->View->loaded['HtmlCache']->path);
+    $path = $this->www_root . 'cache' . DS . 'posts' . DS . 'index.html';
+    $this->assertTrue(file_exists($path));
+    $cached = file_get_contents($path);
     $this->assertEqual($expected, $cached);
   }
 }
