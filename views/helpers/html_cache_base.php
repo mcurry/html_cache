@@ -20,8 +20,8 @@ class HtmlCacheBaseHelper extends Helper {
  */
 	public $options = array(
 		'test_mode' => false,
-		'www_root' => WWW_ROOT,
-		'host' => ''
+    'host' => null,
+		'domain' => false
 	);
 
 /**
@@ -75,24 +75,27 @@ class HtmlCacheBaseHelper extends Helper {
 
 		//handle 404s
 		if ($view->name == 'CakeError') {
-			$this->path = $this->params['url']['url'];
+			$path = $this->params['url']['url'];
 		} else {
-			$this->path = $this->here;
+			$path = $this->here;
 		}
 
-		$this->path = implode(DS, array_filter(explode('/', $this->path)));
-		if($this->path !== '') {
-			$this->path = DS . ltrim($this->path, DS);
+		$path = implode(DS, array_filter(explode('/', $path)));
+		if($path !== '') {
+			$path = DS . ltrim($path, DS);
 		}
-
-		$host = '';
-		if (!empty($_SERVER['HTTP_HOST'])) {
-			$host = $_SERVER['HTTP_HOST'] . '/';
-		} elseif ($this->options['host']) {
-			$host = $this->options['host'] . '/';
-		}
-		$this->path = $this->options['www_root'] . 'cache' . $host . $this->path . DS . 'index.html';
-		$file = new File($this->path, true);
+    
+    $host = '';
+    if($this->options['domain']) {
+      if (!empty($_SERVER['HTTP_HOST'])) {
+        $host = DS . $_SERVER['HTTP_HOST'];
+      } elseif ($this->options['host']) {
+        $host = DS . $this->options['host'];
+      }
+    }
+    
+		$path = $this->options['www_root'] . 'cache' . $host . $path . DS . 'index.html';
+		$file = new File($path, true);
 		$file->write($view->output);
 	}
 
