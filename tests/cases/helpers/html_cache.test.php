@@ -3,28 +3,28 @@ App::import('Helper', array('HtmlCache.HtmlCache'));
 App::import('Core', array('View'));
 
 class HtmlCacheTestCase extends CakeTestCase {
-  var $View = null;
-  var $www_root = null;
-  
-  function startCase() {
+  public $View = null;
+  public $www_root = null;
+
+  public function startCase() {
     $this->www_root = ROOT . DS . 'app' . DS . 'plugins' . DS . 'html_cache' . DS . 'tests' . DS . 'test_app' . DS . 'webroot' . DS;
     $controller = null;
     $this->View = new View($controller);
     $this->View->loaded['HtmlCache'] = new HtmlCacheHelper(array('test_mode' => true, 'www_root' => $this->www_root));
     $this->View->loaded['HtmlCache']->here = '/posts';
   }
-  
-  function endCase() {
+
+  public function endCase() {
     $Folder = new Folder();
     $Folder->delete($this->www_root . 'cache');
   }
-  
-  function testInstances() {
+
+  public function testInstances() {
     $this->assertTrue(is_a($this->View, 'View'));
     $this->assertTrue(is_a(ClassRegistry::getObject('view'), 'View'));
   }
-  
-  function testWriteCache() {
+
+  public function testWriteCache() {
     $expected = <<<END
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html lang="en">

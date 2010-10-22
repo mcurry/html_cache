@@ -5,19 +5,32 @@
  * http://pseudocoder.com
  * http://github.com/mcurry/html_cache
  *
- * @author      mattc <matt@pseudocoder.com>
- * @license     MIT
+ * @author        mattc <matt@pseudocoder.com>
+ * @license       MIT
  *
  */
-
 App::import('Helper', 'HtmlCache.HtmlCacheBase');
+
+/**
+ * HtmlCacheHookHelper class
+ *
+ * @uses          HtmlCacheBaseHelper
+ * @package       html_cache
+ * @subpackage    html_cache.views.helpers
+ */
 class HtmlCacheHookHelper extends HtmlCacheBaseHelper {
-  function __isCachable() {
-    if($this->params['controller'] != 'nodes' || !empty($this->params['admin'])) {
-      return false;
-    }
-    
-    return parent::__isCachable();
-  }
+
+/**
+ * isCachable method
+ *
+ * @return void
+ * @access protected
+ */
+	protected function _isCachable() {
+		if($this->params['controller'] != 'nodes' || !empty($this->params['admin'])) {
+			return false;
+		}
+
+		return parent::_isCachable();
+	}
 }
-?>
