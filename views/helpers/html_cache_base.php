@@ -21,7 +21,8 @@ class HtmlCacheBaseHelper extends Helper {
 	public $options = array(
 		'test_mode' => false,
     'host' => null,
-		'domain' => false
+		'domain' => false,
+		'www_root' => null
 	);
 
 /**
@@ -106,7 +107,6 @@ class HtmlCacheBaseHelper extends Helper {
  * @access protected
  */
 	protected function _isCachable() {
-		return true;
 		if (!$this->options['test_mode'] && Configure::read('debug') > 0) {
 			return false;
 		}
