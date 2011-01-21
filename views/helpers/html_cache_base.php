@@ -95,7 +95,7 @@ class HtmlCacheBaseHelper extends Helper {
 		}
 
 		$path = $this->options['www_root'] . 'cache' . $host . $path;
-		if ($view->params['url']['ext'] === 'html') {
+		if (empty($view->params['url']['ext']) || $view->params['url']['ext'] === 'html') {
 			$path .= DS . 'index.html';
 		}
 		$file = new File($path, true);
