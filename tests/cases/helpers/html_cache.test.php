@@ -39,10 +39,29 @@ END;
 
     $this->View->output = $expected;
     $this->View->_triggerHelpers('afterLayout');
-    
+
     $path = $this->www_root . 'cache' . DS . 'posts' . DS . 'index.html';
     $this->assertTrue(file_exists($path));
     $cached = file_get_contents($path);
     $this->assertEqual($expected, $cached);
+  }
+
+  public function testWriteNotHtmlCache() {
+	  $expected = <<<END
+<rss version="2.0">
+	<channel>
+		...
+	</channel>
+</rss>
+END;
+	  $this->View->loaded['HtmlCache']->here = '/posts.rss';
+	  $this->View->params['url']['ext'] = 'rss';
+	  $this->View->output = $expected;
+
+	  $this->View->_triggerHelpers('afterLayout');
+	  $path = $this->www_root . 'cache' . DS . 'posts.rss';
+	  $this->assertTrue(file_exists($path));
+	  $cached = file_get_contents($path);
+	  $this->assertEqual($expected, $cached);
   }
 }
