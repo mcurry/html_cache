@@ -9,7 +9,6 @@
  * @license       MIT
  *
  */
-
 class HtmlCacheBaseHelper extends Helper {
 
 /**
@@ -20,7 +19,7 @@ class HtmlCacheBaseHelper extends Helper {
  */
 	public $options = array(
 		'test_mode' => false,
-    'host' => null,
+		'host' => null,
 		'domain' => false,
 		'www_root' => null
 	);
@@ -86,19 +85,19 @@ class HtmlCacheBaseHelper extends Helper {
 			$path = DS . ltrim($path, DS);
 		}
 
-    $host = '';
-    if($this->options['domain']) {
-      if (!empty($_SERVER['HTTP_HOST'])) {
-        $host = DS . $_SERVER['HTTP_HOST'];
-      } elseif ($this->options['host']) {
-        $host = DS . $this->options['host'];
-      }
-    }
+		$host = '';
+		if($this->options['domain']) {
+			if (!empty($_SERVER['HTTP_HOST'])) {
+				$host = DS . $_SERVER['HTTP_HOST'];
+			} elseif ($this->options['host']) {
+				$host = DS . $this->options['host'];
+			}
+		}
 
-	$path = $this->options['www_root'] . 'cache' . $host . $path;
-	if ($view->params['url']['ext'] === 'html') {
-   		$path .= DS . 'index.html';
-	}
+		$path = $this->options['www_root'] . 'cache' . $host . $path;
+		if ($view->params['url']['ext'] === 'html') {
+			$path .= DS . 'index.html';
+		}
 		$file = new File($path, true);
 		$file->write($view->output);
 	}
