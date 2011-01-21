@@ -85,7 +85,7 @@ class HtmlCacheBaseHelper extends Helper {
 		if($path !== '') {
 			$path = DS . ltrim($path, DS);
 		}
-    
+
     $host = '';
     if($this->options['domain']) {
       if (!empty($_SERVER['HTTP_HOST'])) {
@@ -94,8 +94,11 @@ class HtmlCacheBaseHelper extends Helper {
         $host = DS . $this->options['host'];
       }
     }
-    
-		$path = $this->options['www_root'] . 'cache' . $host . $path . DS . 'index.html';
+
+	$path = $this->options['www_root'] . 'cache' . $host . $path;
+	if ($view->params['url']['ext'] === 'html') {
+   		$path .= DS . 'index.html';
+	}
 		$file = new File($path, true);
 		$file->write($view->output);
 	}
