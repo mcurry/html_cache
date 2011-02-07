@@ -30,7 +30,7 @@ function file_info(path, ftype)
 end
 
 if (not (check_path(lighty.env["physical.path"]) or 
-    (not lighty.request["Cookie"] and check_path(lighty.env["physical.doc-root"] .. 'cache/' .. lighty.env["physical.rel-path"])))
+    (not lighty.request["Cookie"] and check_path(lighty.env["physical.doc-root"] .. 'cache/' .. lighty.request["Host"] .. "/" .. lighty.env["physical.rel-path"])))
     ) then
         lighty.env["uri.path"]          = "/index.php"
         lighty.env["uri.query"]         = "url=" .. string.gsub(lighty.env["request.uri"], "%?", "&")
