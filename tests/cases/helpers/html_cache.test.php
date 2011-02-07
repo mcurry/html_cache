@@ -4,7 +4,20 @@ App::import('Core', array('View'));
 
 class HtmlCacheTestCase extends CakeTestCase {
 	public $View = null;
+
 	public $www_root = null;
+
+	public $html = <<<END
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+	<title>HtmlCache Test Title</title>
+</head>
+<body>
+	HtmlCache Test Body
+</body>
+</html>
+END;
 
 	public function startCase() {
 		$this->www_root = ROOT . DS . 'app' . DS . 'plugins' . DS . 'html_cache' . DS . 'tests' . DS . 'test_app' . DS . 'webroot' . DS;
@@ -25,59 +38,28 @@ class HtmlCacheTestCase extends CakeTestCase {
 	}
 
 	public function testWriteCache() {
-		$expected = <<<END
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html lang="en">
-<head>
-	<title>HtmlCache Test Title</title>
-</head>
-<body>
-	HtmlCache Test Body
-</body>
-</html>
-END;
-
-		$this->View->output = $expected;
+		$this->View->output = $this->html;
 		$this->View->_triggerHelpers('afterLayout');
 
 		$path = $this->www_root . 'cache' . DS . 'posts' . DS . 'index.html';
 		$this->assertTrue(file_exists($path));
 		$cached = file_get_contents($path);
-		$this->assertEqual($expected, $cached);
+		$this->assertEqual($this->html, $cached);
 	}
 
 	public function testWriteHtmlUrlCache() {
-		$expected = <<<END
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html lang="en">
-<head>
-	<title>HtmlCache Test Title</title>
-</head>
-<body>
-	HtmlCache Test Body
-</body>
-</html>
-END;
-
-		$this->View->output = $expected;
+		$this->View->output = $this->html;
 		$this->View->_triggerHelpers('afterLayout');
 
 		$path = $this->www_root . 'cache' . DS . 'posts' . DS . 'index.html';
 		$this->assertTrue(file_exists($path));
 		$cached = file_get_contents($path);
-		$this->assertEqual($expected, $cached);
+		$this->assertEqual($this->html, $cached);
 	}
 
 	public function testWriteNotHtmlCache() {
-		$expected = <<<END
-<rss version="2.0">
-	<channel>
-		...
-	</channel>
-</rss>
-END;
+		$this->View->output = $this->html;
 		$this->View->loaded['HtmlCache']->here = '/astatic.html';
-		$this->View->output = $expected;
 
 		$this->View->_triggerHelpers('afterLayout');
 		$rightpath = $this->www_root . 'cache' . DS . 'astatic.html';
@@ -87,6 +69,6 @@ END;
 		$this->assertFalse(file_exists($wrongpath));
 
 		$cached = file_get_contents($rightpath);
-		$this->assertEqual($expected, $cached);
+		$this->assertEqual($this->html, $cached);
 	}
 }
