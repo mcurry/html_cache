@@ -19,6 +19,14 @@ class HtmlCacheTestCase extends CakeTestCase {
 </html>
 END;
 
+	public $rss = <<<END
+<rss version="2.0">
+	   <channel>
+			   ...
+	   </channel>
+</rss>         
+END;
+
 	public function startCase() {
 		$this->www_root = ROOT . DS . 'app' . DS . 'plugins' . DS . 'html_cache' . DS . 'tests' . DS . 'test_app' . DS . 'webroot' . DS;
 		$controller = null;
@@ -62,13 +70,16 @@ END;
 	}
 
 	public function testWriteNotHtmlCache() {
-		$this->View->output = $this->html;
+		$this->View->output = $this->rss;
+		$this->View->loaded['HtmlCache']->here = '/posts.rss';
+		$this->View->params['url']['ext'] = 'rss';
+
 		$this->View->_triggerHelpers('afterLayout');
 
-		$path = $this->www_root . 'cache' . DS . 'posts' . DS . 'index.html';
+		$path = $this->www_root . 'cache' . DS . 'posts.rss';
 		$this->assertTrue(file_exists($path));
 		$cached = file_get_contents($path);
-		$this->assertEqual($this->html, $cached);
+		$this->assertEqual($this->rss, $cached);
 
 		$this->View->output = $this->html;
 	}
