@@ -46,6 +46,28 @@ END;
 		$this->assertEqual($expected, $cached);
 	}
 
+	public function testWriteHtmlUrlCache() {
+		$expected = <<<END
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+	<title>HtmlCache Test Title</title>
+</head>
+<body>
+	HtmlCache Test Body
+</body>
+</html>
+END;
+
+		$this->View->output = $expected;
+		$this->View->_triggerHelpers('afterLayout');
+
+		$path = $this->www_root . 'cache' . DS . 'posts' . DS . 'index.html';
+		$this->assertTrue(file_exists($path));
+		$cached = file_get_contents($path);
+		$this->assertEqual($expected, $cached);
+	}
+
 	public function testWriteNotHtmlCache() {
 		$expected = <<<END
 <rss version="2.0">
@@ -54,14 +76,17 @@ END;
 	</channel>
 </rss>
 END;
-		$this->View->loaded['HtmlCache']->here = '/posts.rss';
-		$this->View->params['url']['ext'] = 'rss';
+		$this->View->loaded['HtmlCache']->here = '/astatic.html';
 		$this->View->output = $expected;
 
 		$this->View->_triggerHelpers('afterLayout');
-		$path = $this->www_root . 'cache' . DS . 'posts.rss';
-		$this->assertTrue(file_exists($path));
-		$cached = file_get_contents($path);
+		$rightpath = $this->www_root . 'cache' . DS . 'astatic.html';
+		$this->assertTrue(file_exists($rightpath));
+
+		$wrongpath = $this->www_root . 'cache' . DS . 'astatic.html' . DS . 'index.html';
+		$this->assertFalse(file_exists($wrongpath));
+
+		$cached = file_get_contents($rightpath);
 		$this->assertEqual($expected, $cached);
 	}
 }
