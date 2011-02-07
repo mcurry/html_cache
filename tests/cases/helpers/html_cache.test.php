@@ -47,18 +47,7 @@ END;
 		$this->assertEqual($this->html, $cached);
 	}
 
-	public function testWriteHtmlUrlCache() {
-		$this->View->output = $this->html;
-		$this->View->_triggerHelpers('afterLayout');
-
-		$path = $this->www_root . 'cache' . DS . 'posts' . DS . 'index.html';
-		$this->assertTrue(file_exists($path));
-		$cached = file_get_contents($path);
-		$this->assertEqual($this->html, $cached);
-	}
-
-	public function testWriteNotHtmlCache() {
-		$this->View->output = $this->html;
+	public function testWriteHtmlInUrlCache() {
 		$this->View->loaded['HtmlCache']->here = '/astatic.html';
 
 		$this->View->_triggerHelpers('afterLayout');
@@ -70,5 +59,17 @@ END;
 
 		$cached = file_get_contents($rightpath);
 		$this->assertEqual($this->html, $cached);
+	}
+
+	public function testWriteNotHtmlCache() {
+		$this->View->output = $this->html;
+		$this->View->_triggerHelpers('afterLayout');
+
+		$path = $this->www_root . 'cache' . DS . 'posts' . DS . 'index.html';
+		$this->assertTrue(file_exists($path));
+		$cached = file_get_contents($path);
+		$this->assertEqual($this->html, $cached);
+
+		$this->View->output = $this->html;
 	}
 }
